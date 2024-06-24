@@ -94,10 +94,6 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="./data.qmd"> 
 <span class="menu-text">Data Analysis</span></a>
   </li>  
@@ -108,6 +104,10 @@ ul.task-list li input[type="checkbox"] {
   <li class="nav-item">
     <a class="nav-link" href="./downloads.qmd"> 
 <span class="menu-text">Downloads</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -121,7 +121,20 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview-of-students-exam-performances-dataset" id="toc-overview-of-students-exam-performances-dataset" class="nav-link active" data-scroll-target="#overview-of-students-exam-performances-dataset">Overview of Students Exam Performances Dataset</a>
+  <ul class="collapse">
+  <li><a href="#dataset-description" id="toc-dataset-description" class="nav-link" data-scroll-target="#dataset-description">Dataset Description</a></li>
+  <li><a href="#initial-data-exploration" id="toc-initial-data-exploration" class="nav-link" data-scroll-target="#initial-data-exploration">Initial Data Exploration</a>
+  <ul class="collapse">
+  <li><a href="#load-necessary-libraries" id="toc-load-necessary-libraries" class="nav-link" data-scroll-target="#load-necessary-libraries">Load necessary libraries</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -151,8 +164,78 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="overview-of-students-exam-performances-dataset" class="level1">
+<h1>Overview of Students Exam Performances Dataset</h1>
+<p>This website explores the performance of students in exams using the StudentsPerformance.csv dataset. The dataset includes information such as student demographics, parental education levels, and exam scores in various subjects.</p>
+<section id="dataset-description" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-description">Dataset Description</h2>
+<p>The dataset contains the following columns:</p>
+<ul>
+<li><code>gender</code>: Student’s gender (male/female)</li>
+<li><code>race/ethnicity</code>: Race/ethnicity of the student</li>
+<li><code>parental level of education</code>: Parent’s education level</li>
+<li><code>lunch</code>: Type of lunch student received (standard/reduced)</li>
+<li><code>test preparation course</code>: Whether the student completed a test preparation course (none/completed)</li>
+<li><code>math score</code>: Score in math exam</li>
+<li><code>reading score</code>: Score in reading exam</li>
+<li><code>writing score</code>: Score in writing exam</li>
+</ul>
+</section>
+<section id="initial-data-exploration" class="level2">
+<h2 class="anchored" data-anchor-id="initial-data-exploration">Initial Data Exploration</h2>
+<section id="load-necessary-libraries" class="level3">
+<h3 class="anchored" data-anchor-id="load-necessary-libraries">Load necessary libraries</h3>
+<pre><code>library(tidyverse)
+
+students &lt;- read.csv("data/StudentsPerformance.csv")
+
+# Calculate summary statistics
+summary_stats &lt;- students %&gt;%
+  summarise(
+    mean_math_score = mean(`math score`, na.rm = TRUE),
+    mean_reading_score = mean(`reading score`, na.rm = TRUE),
+    mean_writing_score = mean(`writing score`, na.rm = TRUE),
+    sd_math_score = sd(`math score`, na.rm = TRUE),
+    sd_reading_score = sd(`reading score`, na.rm = TRUE),
+    sd_writing_score = sd(`writing score`, na.rm = TRUE)
+  )
+
+# Print summary statistics
+summary_stats
+
+# Plot distributions of exam scores
+students %&gt;%
+  gather(key = "subject", value = "score", `math score`, `reading score`, `writing score`) %&gt;%
+  ggplot(aes(x = score, fill = subject)) +
+  geom_histogram(binwidth = 10, color = "black", alpha = 0.7) +
+  facet_wrap(~ subject, scales = "free") +
+  labs(title = "Distribution of Exam Scores", x = "Score", y = "Count") +
+  theme_minimal()
+
+students %&gt;%
+  group_by(gender) %&gt;%
+  summarise(
+    mean_math_score = mean(`math score`, na.rm = TRUE),
+    mean_reading_score = mean(`reading score`, na.rm = TRUE),
+    mean_writing_score = mean(`writing score`, na.rm = TRUE)
+  ) %&gt;%
+  gather(key = "subject", value = "mean_score", -gender) %&gt;%
+  ggplot(aes(x = subject, y = mean_score, fill = gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Average Scores by Gender", x = "Subject", y = "Mean Score") +
+  theme_minimal()</code></pre>
+<pre><code>students %&gt;%
+  gather(key = "subject", value = "score", `math score`, `reading score`, `writing score`) %&gt;%
+  ggplot(aes(x = `parental level of education`, y = score, fill = subject)) +
+  geom_boxplot() +
+  labs(title = "Scores by Parental Education Level", x = "Parental Education Level", y = "Score") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
 
 
+</section>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

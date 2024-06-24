@@ -3,5 +3,75 @@ title: "Student Exam Performances"
 author: "Harshil K"
 ---
 
+# Overview of Students Exam Performances Dataset
+
+This website explores the performance of students in exams using the StudentsPerformance.csv dataset. The dataset includes information such as student demographics, parental education levels, and exam scores in various subjects.
+
+## Dataset Description
+
+The dataset contains the following columns:
+
+- `gender`: Student’s gender (male/female)
+- `race/ethnicity`: Race/ethnicity of the student
+- `parental level of education`: Parent’s education level
+- `lunch`: Type of lunch student received (standard/reduced)
+- `test preparation course`: Whether the student completed a test preparation course (none/completed)
+- `math score`: Score in math exam
+- `reading score`: Score in reading exam
+- `writing score`: Score in writing exam
+
+## Initial Data Exploration
+
+### Load necessary libraries
+
+```{r}
+library(tidyverse)
+
+students <- read.csv("data/StudentsPerformance.csv")
+
+# Calculate summary statistics
+summary_stats <- students %>%
+  summarise(
+    mean_math_score = mean(`math score`, na.rm = TRUE),
+    mean_reading_score = mean(`reading score`, na.rm = TRUE),
+    mean_writing_score = mean(`writing score`, na.rm = TRUE),
+    sd_math_score = sd(`math score`, na.rm = TRUE),
+    sd_reading_score = sd(`reading score`, na.rm = TRUE),
+    sd_writing_score = sd(`writing score`, na.rm = TRUE)
+  )
+
+# Print summary statistics
+summary_stats
+
+# Plot distributions of exam scores
+students %>%
+  gather(key = "subject", value = "score", `math score`, `reading score`, `writing score`) %>%
+  ggplot(aes(x = score, fill = subject)) +
+  geom_histogram(binwidth = 10, color = "black", alpha = 0.7) +
+  facet_wrap(~ subject, scales = "free") +
+  labs(title = "Distribution of Exam Scores", x = "Score", y = "Count") +
+  theme_minimal()
+
+students %>%
+  group_by(gender) %>%
+  summarise(
+    mean_math_score = mean(`math score`, na.rm = TRUE),
+    mean_reading_score = mean(`reading score`, na.rm = TRUE),
+    mean_writing_score = mean(`writing score`, na.rm = TRUE)
+  ) %>%
+  gather(key = "subject", value = "mean_score", -gender) %>%
+  ggplot(aes(x = subject, y = mean_score, fill = gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Average Scores by Gender", x = "Subject", y = "Mean Score") +
+  theme_minimal()
+
+students %>%
+  gather(key = "subject", value = "score", `math score`, `reading score`, `writing score`) %>%
+  ggplot(aes(x = `parental level of education`, y = score, fill = subject)) +
+  geom_boxplot() +
+  labs(title = "Scores by Parental Education Level", x = "Parental Education Level", y = "Score") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
 
 

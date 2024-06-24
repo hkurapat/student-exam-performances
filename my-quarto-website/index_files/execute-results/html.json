@@ -1,0 +1,15 @@
+{
+  "hash": "fa0c34e265372fe39ae96f67e9199ba2",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Student Exam Performances\"\nauthor: \"Harshil K\"\n---\n\n::: {.cell}\n\n```{.r .cell-code}\n# Overview of Students Exam Performances Dataset\n\n\"This website explores the performance of students in exams using the StudentsPerformance.csv dataset. The dataset includes information such as student demographics, parental education levels, and exam scores in various subjects.\"\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] \"This website explores the performance of students in exams using the StudentsPerformance.csv dataset. The dataset includes information such as student demographics, parental education levels, and exam scores in various subjects.\"\n```\n\n\n:::\n\n```{.r .cell-code}\n## Dataset Description\n\n\"The dataset contains the following columns:\n\n- `gender`: Student's gender (male/female)\n- `race/ethnicity`: Race/ethnicity of the student\n- `parental level of education`: Parent's education level\n- `lunch`: Type of lunch student received (standard/reduced)\n- `test preparation course`: Whether the student completed a test preparation course (none/completed)\n- `math score`: Score in math exam\n- `reading score`: Score in reading exam\n- `writing score`: Score in writing exam\"\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] \"The dataset contains the following columns:\\n\\n- `gender`: Student's gender (male/female)\\n- `race/ethnicity`: Race/ethnicity of the student\\n- `parental level of education`: Parent's education level\\n- `lunch`: Type of lunch student received (standard/reduced)\\n- `test preparation course`: Whether the student completed a test preparation course (none/completed)\\n- `math score`: Score in math exam\\n- `reading score`: Score in reading exam\\n- `writing score`: Score in writing exam\"\n```\n\n\n:::\n\n```{.r .cell-code}\n## Initial Data Exploration\n\n### Summary Statistics\n```\n:::\n\nr\n# Load the dataset\nstudents <- read.csv(\"data/StudentsPerformance.csv\")\n\n# Summary statistics\nsummary(students[, c(\"math score\", \"reading score\", \"writing score\")])\n\n```\n{r setup, include = FALSE}\n# Load necessary libraries\nlibrary(tidyverse)\n\n# Load the dataset\nstudents <- read.csv(\"data/StudentsPerformance.csv\")\n```\n\n\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

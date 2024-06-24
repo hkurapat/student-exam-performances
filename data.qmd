@@ -2,6 +2,9 @@
 title: "Student Exam Data"
 author: "Harshil K"
 format: html
+execute: 
+  message: false
+  echo: false
 ---
 
 
