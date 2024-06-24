@@ -1,8 +1,22 @@
 ---
-title: "Students Exam Performances"
+title: "Student Exam Data"
 author: "Harshil K"
 format: html
 ---
 
 
+# Student Performance Data
 
+Below is a preview of the student performance data loaded from the CSV file.
+
+```{r}
+library(readr)
+
+# Set the path to the CSV file
+csv_path <- "StudentsPerformance.csv"  # Adjust path if necessary
+
+# Read the CSV file
+students_data <- read_csv(csv_path)
+
+# Display the first few rows of the data
+head(students_data)
