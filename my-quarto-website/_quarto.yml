@@ -4,16 +4,29 @@ project:
 website:
   title: "Students Exam Performances"
   navbar:
+    title: "Students Exam Performances"
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+      - text: "Home"
+        href: index.qmd
+      - text: "About"
+        href: about.qmd
+      - text: "Data Analysis"
+        href: data.qmd
+      - text: "Visualization"
+        href: visualization.qmd
+      - text: "Downloads"
+        href: downloads.qmd
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
+    highlightjs: true
+    mathjax: true
+    mathjax-url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 
+output:
+  self_contained: false
 
 
