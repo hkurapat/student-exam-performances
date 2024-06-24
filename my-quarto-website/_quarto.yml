@@ -19,7 +19,7 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: flatly
     css: styles.css
     toc: true
     highlightjs: true
@@ -28,5 +28,3 @@ format:
 
 output:
   self_contained: false
-
-
